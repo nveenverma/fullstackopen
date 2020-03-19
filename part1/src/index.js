@@ -5,12 +5,14 @@ import ReactDOM from 'react-dom'
 
 const Header = ({headerContent}) => <h1>{headerContent}</h1>;
 
+const Part = ({p, ex}) => <p>{p} {ex}</p>
+
 const Content = ({p1, ex1, p2, ex2, p3, ex3}) => {
     return (
         <>
-            <p>{p1} {ex1}</p>
-            <p>{p2} {ex2}</p>
-            <p>{p3} {ex3}</p>
+            <Part p={p1} ex={ex1} />
+            <Part p={p2} ex={ex2} />
+            <Part p={p3} ex={ex3} />
         </>
     )
 }
