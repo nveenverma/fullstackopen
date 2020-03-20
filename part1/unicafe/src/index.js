@@ -9,7 +9,14 @@ const Button = ({changeFunction, text}) => {
     )
 }
 
-const Statistic = ({text, value}) => <p><b>{text} {value}</b></p>
+const Statistic = ({text, value}) => {
+    return (
+        <tr>
+            <td>{text} </td>
+            <td> {value}</td>
+        </tr>
+    )
+}
 
 const Statistics = ({good, bad, neutral, all, avg, positivePercentage}) => {
 
@@ -19,14 +26,16 @@ const Statistics = ({good, bad, neutral, all, avg, positivePercentage}) => {
             )
         }
         return (
-            <>
-            <Statistic text="good" value={good}/>
-            <Statistic text="neutral" value={neutral}/>
-            <Statistic text="bad" value={bad}/>
-            <Statistic text="all" value={all}/>
-            <Statistic text="average" value={avg} />
-            <Statistic text="positive" value={positivePercentage} />
-            </>
+            <table>
+                <tbody>
+                    <Statistic text="good" value={good}/>
+                    <Statistic text="neutral" value={neutral}/>
+                    <Statistic text="bad" value={bad}/>
+                    <Statistic text="all" value={all}/>
+                    <Statistic text="average" value={avg} />
+                    <Statistic text="positive" value={positivePercentage} />
+                </tbody>
+            </table>
         )  
     }
 
