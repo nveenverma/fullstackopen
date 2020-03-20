@@ -9,6 +9,8 @@ const Button = ({text, changeFunction}) => {
   )
 }
 
+const Header = ({text}) => <h1>{text}</h1>
+
 const App = ({quotes}) => {
   const [selected, setSelected] = useState(0);
   const arrLen = quotes.length;  
@@ -21,15 +23,24 @@ const App = ({quotes}) => {
     const changeVotes = () => setVotes(copy)
     return changeVotes
   }
+
+  const maxVotes = Math.max(...votes);  
   
   return (
     <>
     <div>
+      <Header text="Anecdote of the day" />
       {quotes[selected]}
       <p>has {votes[selected]} votes</p>
+      <Button text="vote" changeFunction={addVote(selected)} />
+      <Button text="next anecdote" changeFunction={changeSelected} />
     </div>
-    <Button text="vote" changeFunction={addVote(selected)} />
-    <Button text="next anecdote" changeFunction={changeSelected} />
+    <div>
+      <Header text="Anecdote with most votes" />
+      {quotes[votes.indexOf(maxVotes)]}
+      <p>has {maxVotes} votes</p>
+    </div>
+
     </>
   )
 }
