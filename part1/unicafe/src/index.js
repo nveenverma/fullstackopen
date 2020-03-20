@@ -11,20 +11,24 @@ const Button = ({changeFunction, text}) => {
 
 const P = ({text, value}) => <p><b>{text} {value}</b></p>
 
-const Statistics = ({good, bad, neutral, 
-    all, avg, positivePercentage}) => {
-    return (
-        <>
-        <h1>statistics</h1>
-        <P text="good" value={good}/>
-        <P text="neutral" value={neutral}/>
-        <P text="bad" value={bad}/>
-        <P text="all" value={all}/>
-        <P text="average" value={avg} />
-        <P text="positive" value={positivePercentage} />
-        </>
-    )
-}
+const Statistics = ({good, bad, neutral, all, avg, positivePercentage}) => {
+
+        if (all === 0) {
+            return (
+                <p>No feedback given</p>
+            )
+        }
+        return (
+            <>
+            <P text="good" value={good}/>
+            <P text="neutral" value={neutral}/>
+            <P text="bad" value={bad}/>
+            <P text="all" value={all}/>
+            <P text="average" value={avg} />
+            <P text="positive" value={positivePercentage} />
+            </>
+        )  
+    }
 
 const App = () => {
 
@@ -45,10 +49,9 @@ const App = () => {
             <Button changeFunction={incrementGood} text="good" />
             <Button changeFunction={incrementNeutral} text="neutral" />
             <Button changeFunction={incrementBad} text="bad" />
-
+            <h1>statistics</h1>
             <Statistics good={good} bad={bad} neutral={neutral} 
             all={all} avg={avg} positivePercentage={positivePercentage} />
-
         </div>
   )
 }
