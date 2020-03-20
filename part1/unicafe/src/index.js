@@ -13,9 +13,12 @@ const P = ({text, value}) => <p><b>{text} {value}</b></p>
 
 const App = () => {
   // save clicks of each button to own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  const all = good + bad + neutral;
+  const avg = (good-bad)/all;
+  const positivePercentage = (good/all)*100 + " %";
 
   const incrementGood = () => setGood(good+1)
   const incrementNeutral = () => setNeutral(neutral+1)
@@ -32,6 +35,9 @@ const App = () => {
       <P text="good" value={good}/>
       <P text="neutral" value={neutral}/>
       <P text="bad" value={bad}/>
+      <P text="all" value={all}/>
+      <P text="average" value={avg} />
+      <P text="positive" value={positivePercentage} />
     </div>
   )
 }
