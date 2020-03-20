@@ -12,13 +12,23 @@ const Button = ({text, changeFunction}) => {
 const App = ({quotes}) => {
   const [selected, setSelected] = useState(0);
   const arrLen = quotes.length;  
+  const [votes, setVotes] = useState(Array(arrLen).fill(0));
+
   const changeSelected = () => setSelected(Math.floor(Math.random() * arrLen))
+  const addVote = (sel) => {
+    const copy = [...votes];
+    copy[sel] += 1;
+    const changeVotes = () => setVotes(copy)
+    return changeVotes
+  }
   
   return (
     <>
     <div>
       {quotes[selected]}
+      <p>has {votes[selected]} votes</p>
     </div>
+    <Button text="vote" changeFunction={addVote(selected)} />
     <Button text="next anecdote" changeFunction={changeSelected} />
     </>
   )
