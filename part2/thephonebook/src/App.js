@@ -1,8 +1,9 @@
 // jshint esversion:6
 
 import React, { useState } from 'react';
-import Note from './components/Note';
-import Heading from './components/Heading';
+import Filter from './components/Filter';
+import AddContactForm from './components/AddContactForm';
+import ContactsList from './components/ContactsList';
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -49,28 +50,16 @@ const App = () => {
 
   return (
     <div>
-      <Heading text="Phonebook" />
-      <div>
-        filter shown with <input value={showNotes} onChange={filterNotes}/>
-      </div>
+      <h2>Phonebook</h2>
+      <Filter initialValue={showNotes} onChangeFunc={filterNotes} />
 
-      <Heading text="add a new" />
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit" onClick={addNote}>add</button>
-        </div>
-      </form>
-      <Heading text="Numbers" />
-        <ul>
-          {/* {persons.map((i, key) => <Note key= {i.name} note={i} />)} */}
-          {notesToShow.map((i, key) => <Note key= {i.name} note={i} />)}
-        </ul>
+      <h2>add a new</h2>
+      <AddContactForm newName={newName} nameChangeFunc={handleNameChange}
+        newNumber={newNumber} numberChangeFunc={handleNumberChange}
+        submitFunc={addNote} />
+
+      <h2>Numbers</h2>  
+      <ContactsList notesList={notesToShow}/>
     </div>
   )
 }
