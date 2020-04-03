@@ -59,6 +59,18 @@ const App = () => {
     ? persons
     : persons.filter(person => person.name.toLowerCase().includes(showNotes.toLowerCase()));
   
+  const delNote = id => {
+    const targetNote = persons.find(person => person.id === id);
+    console.log(targetNote.name);
+    let result = window.confirm(`Delete ${targetNote.name} ?`);
+    if (result) {
+      noteService
+      .deleteNote(id)
+      .then(res => {
+        setPersons(persons.filter(person => person.id !== id))
+      })  
+    } 
+  }
 
   return (
     <div>
@@ -71,7 +83,7 @@ const App = () => {
         submitFunc={addNote} />
 
       <h2>Numbers</h2>  
-      <ContactsList notesList={notesToShow}/>
+      <ContactsList notesList={notesToShow} delNote={delNote} />
     </div>
   )
 }
