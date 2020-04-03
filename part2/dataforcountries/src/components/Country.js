@@ -1,6 +1,6 @@
 // jshint esversion:6
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const Country = ({country}) => {
 
@@ -13,7 +13,7 @@ const Country = ({country}) => {
       <ul>
         {country.languages.map(lang => <li key={lang.name}>{lang.name}</li>)}
       </ul>
-      <img src={country.flag} height="100" width="100"/>
+      <img alt={`flag of country ${country.name}`} src={country.flag} height="100" width="100"/>
     </>
   )
 

@@ -21,10 +21,14 @@ const App = () => {
     setSearchNote(e.target.value);
   }
 
+  const changeNote = (e) => {
+    setSearchNote(e.target.attributes.name.value);
+  }
+
   return (
     <>
     <p>find <input value={searchNote} onChange={handleSearchNoteChange}/></p>
-    <Display countries={notes} filter={searchNote} />
+    <Display countries={notes} filter={searchNote} changeCountry={changeNote}/>
     </>
   );
 }

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Country from './Country';
 
-const Display = ({countries, filter}) => {
+const Display = ({countries, filter, changeCountry}) => {
 
   const [showNotes, setShowNotes] = useState([]);
 
@@ -29,8 +29,12 @@ const Display = ({countries, filter}) => {
     }
 
     return (
-        showNotes.map(note => <li key={note.name}>{note.name}</li>) 
-    )
+        showNotes.map(
+          note => <li key={note.name}>
+                    {note.name} <button name={note.name} onClick={changeCountry}>show</button>
+                  </li>
+        )
+    );
   } 
 
   return ('');
