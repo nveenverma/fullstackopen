@@ -5,6 +5,8 @@ import axios from 'axios';
 import Filter from './components/Filter';
 import AddContactForm from './components/AddContactForm';
 import ContactsList from './components/ContactsList';
+import noteService from './services/notes';
+
 
 const App = () => {
   const [ persons, setPersons] = useState([]);
@@ -14,11 +16,10 @@ const App = () => {
 
   useEffect(() => {
     console.log("effect");
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('Promise fullfilled');
-        setPersons(response.data);        
+    noteService
+      .getAll()
+      .then(initNotes => {
+        setPersons(initNotes)
       })
   }, []);
   
@@ -32,10 +33,10 @@ const App = () => {
 
     persons.map(i => i.name).includes(newName) ?
     alert(`${newName} is already added to phonebook`):
-    axios
-      .post('http://localhost:3001/persons', noteObject)
-      .then(response => {
-        setPersons(persons.concat(noteObject));
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setPersons(persons.concat(returnedNote))
       })
 
     setNewName('');
