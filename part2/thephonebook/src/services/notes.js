@@ -13,10 +13,15 @@ const create = newObject => {
   return request.then(res => res.data);
 }
 
+const update = (newObject, id) => {
+  const request = axios.put(`${baseUrl}/${id}`, newObject);
+  return request.then(res => res.data);
+}
+
+
 const deleteNote = id => {
   const request = axios.delete(`${baseUrl}/${id}`);
   return request.then(res => res.data); 
 }
 
-
-export default { getAll, create, deleteNote }
+export default { getAll, create, update, deleteNote }

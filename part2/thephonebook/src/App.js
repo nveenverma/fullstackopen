@@ -1,7 +1,6 @@
 // jshint esversion:6
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Filter from './components/Filter';
 import AddContactForm from './components/AddContactForm';
 import ContactsList from './components/ContactsList';
@@ -31,17 +30,32 @@ const App = () => {
       number: newNumber
     };
 
-    persons.map(i => i.name).includes(newName) ?
-    alert(`${newName} is already added to phonebook`):
-    noteService
-      .create(noteObject)
-      .then(returnedNote => {
-        setPersons(persons.concat(returnedNote))
-      })
+    const containsName = persons.map(i => i.name).includes(newName);
+
+    if (containsName) {
+      const id = persons.filter(person => person.name === newName)[0].id;
+  
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new number`)) {
+        noteService
+          .update(noteObject, id)
+          .then(returnedNote => {
+            const newPersons = persons.map(person => person.id !== id ? person : returnedNote);
+            setPersons(newPersons);
+          })
+      }
+
+    } else {
+        noteService
+          .create(noteObject)
+          .then(returnedNote => {
+            setPersons(persons.concat(returnedNote))
+          })
+    }
 
     setNewName('');
     setNewNumber('');
-  };
+
+  }
   
   const handleNameChange = (e) => {
     setNewName(e.target.value);
@@ -61,8 +75,8 @@ const App = () => {
   
   const delNote = id => {
     const targetNote = persons.find(person => person.id === id);
-    console.log(targetNote.name);
     let result = window.confirm(`Delete ${targetNote.name} ?`);
+    
     if (result) {
       noteService
       .deleteNote(id)
