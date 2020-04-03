@@ -32,7 +32,11 @@ const App = () => {
 
     persons.map(i => i.name).includes(newName) ?
     alert(`${newName} is already added to phonebook`):
-    setPersons(persons.concat(noteObject));
+    axios
+      .post('http://localhost:3001/persons', noteObject)
+      .then(response => {
+        setPersons(persons.concat(noteObject));
+      })
 
     setNewName('');
     setNewNumber('');
