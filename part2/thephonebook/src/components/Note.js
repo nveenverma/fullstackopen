@@ -4,7 +4,7 @@ import React from 'react';
 
 const Note = ({ note, delNote }) => {
   return (
-    <li>{note.name} {note.number}  
+    <li className='note'>{note.name} {note.number}  
       <button onClick={() => delNote(note.id)}>  
         Delete
       </button>

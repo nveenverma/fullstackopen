@@ -4,14 +4,18 @@ import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import AddContactForm from './components/AddContactForm';
 import ContactsList from './components/ContactsList';
+import Notification from './components/Notification';
 import noteService from './services/notes';
-
 
 const App = () => {
   const [ persons, setPersons] = useState([]);
   const [ newName, setNewName ] = useState('');
   const [ newNumber, setNewNumber ] = useState('');
   const [ showNotes, setShowNotes ] = useState('');
+  const [ errorMessage, setErrorMessage ] = useState({
+        message: null,
+        category: null
+      });
 
   useEffect(() => {
     console.log("effect");
@@ -40,6 +44,14 @@ const App = () => {
           .update(noteObject, id)
           .then(returnedNote => {
             const newPersons = persons.map(person => person.id !== id ? person : returnedNote);
+            const mess = {
+              message: `${noteObject.name}'s contact is updated on the phonebook`,
+              category: 'success'
+            }
+            setErrorMessage(mess);
+            setTimeout(() => {
+              setErrorMessage({ ...errorMessage, message:null })
+            }, 5000);
             setPersons(newPersons);
           })
       }
@@ -48,6 +60,14 @@ const App = () => {
         noteService
           .create(noteObject)
           .then(returnedNote => {
+            const mess = {
+              message: `${noteObject.name} is added to the phonebook`,
+              category: 'success'
+            }
+            setErrorMessage(mess);
+            setTimeout(() => {
+              setErrorMessage({ ...errorMessage, message:null })
+            }, 5000);
             setPersons(persons.concat(returnedNote))
           })
     }
@@ -81,14 +101,23 @@ const App = () => {
       noteService
       .deleteNote(id)
       .then(res => {
-        setPersons(persons.filter(person => person.id !== id))
+        const mess = {
+          message : `${targetNote.name}'s contact is deleted from the phonebook`,
+          category : 'success'
+        }
+        setErrorMessage(mess);
+        setTimeout(() => {
+          setErrorMessage({ ...errorMessage, message:null });
+        }, 5000);
+        setPersons(persons.filter(person => person.id !== id));
       })  
     } 
   }
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification errorMessage={errorMessage} />
       <Filter initialValue={showNotes} onChangeFunc={filterNotes} />
 
       <h2>add a new</h2>
