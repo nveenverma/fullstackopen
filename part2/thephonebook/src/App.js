@@ -54,6 +54,17 @@ const App = () => {
             }, 5000);
             setPersons(newPersons);
           })
+          .catch(error => {
+            const mess = {
+              message : `${noteObject.name}'s contact is already deleted from the phonebook`,
+              category: 'error' 
+            }
+            setErrorMessage(mess);
+            setTimeout(() => {
+              setErrorMessage({ ...errorMessage, message: null})
+            }, 5000);
+            setPersons(persons.filter(person => person.id !== id));
+          })
       }
 
     } else {
@@ -110,7 +121,7 @@ const App = () => {
           setErrorMessage({ ...errorMessage, message:null });
         }, 5000);
         setPersons(persons.filter(person => person.id !== id));
-      })  
+      }) 
     } 
   }
 
